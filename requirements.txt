@@ -1,0 +1,11 @@
+torch
+transformers
+speechbrain
+soundfile
+librosa
+openai-whisper
+accelerate
+sentencepiece
+pydantic
+torchcodec
+datasets

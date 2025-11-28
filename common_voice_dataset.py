@@ -32,26 +32,85 @@ class CommonVoiceDataset:
         if not self.lang_path:
              raise FileNotFoundError(f"Could not find directory for language '{language_code}' in {self.dataset_path}")
 
-        self.tsv_path = os.path.join(self.lang_path, f"{split}.tsv")
-        if not os.path.exists(self.tsv_path):
-             raise FileNotFoundError(f"TSV file not found: {self.tsv_path}")
+        # Adjust for flattened structure:
+        # If split is 'dev', look for 'cv-valid-dev.csv'
+        # If split is 'train', look for 'cv-valid-train.csv'
+        
+        # Standard Common Voice name map
+        # "train" -> "cv-valid-train"
+        # "dev" -> "cv-valid-dev"
+        # "test" -> "cv-valid-test"
+        
+        split_map = {
+            "train": "cv-valid-train",
+            "dev": "cv-valid-dev",
+            "test": "cv-valid-test"
+        }
+        
+        target_name = split_map.get(split, split)
+        
+        # Try finding CSV (Kaggle version often uses CSV instead of TSV)
+        csv_path = os.path.join(self.lang_path, f"{target_name}.csv")
+        tsv_path = os.path.join(self.lang_path, f"{target_name}.tsv")
+        
+        if os.path.exists(csv_path):
+            self.metadata_path = csv_path
+            sep = ','
+        elif os.path.exists(tsv_path):
+            self.metadata_path = tsv_path
+            sep = '\t'
+        else:
+             # Try original simple name just in case
+             simple_tsv = os.path.join(self.lang_path, f"{split}.tsv")
+             if os.path.exists(simple_tsv):
+                 self.metadata_path = simple_tsv
+                 sep = '\t'
+             else:
+                 raise FileNotFoundError(f"Metadata file not found for split '{split}' in {self.lang_path}")
              
         # Load metadata
-        self.df = pd.read_csv(self.tsv_path, sep='\t')
+        self.df = pd.read_csv(self.metadata_path, sep=sep)
+        
+        # Normalize column names if needed
+        # Kaggle CSV might have 'filename' instead of 'path'
+        if 'filename' in self.df.columns and 'path' not in self.df.columns:
+            self.df['path'] = self.df['filename']
+            
         print(f"Loaded {len(self.df)} records for {language_code}/{split}")
 
     def _find_language_dir(self, root_path: str, lang_code: str):
         """Recursively finds the directory for the specific language code."""
         print(f"Searching for language '{lang_code}' in {root_path}")
-        # Common Voice Kaggle structure often looks like:
-        # /.../versions/2/cv-corpus-X.X-20XX.../en/
-        # OR sometimes just /.../versions/2/en/ if it's unzipped flatly.
         
-        # Walk and look for a directory named exactly 'en' (or 'es') that contains 'clips' subdir or .tsv files
+        # Kaggle Common Voice structure is confusing.
+        # It seems the dataset is already split into 'cv-valid-train', 'cv-valid-dev', etc. at the root.
+        # It might NOT have language folders if this is the English-only release or structured differently.
+        # The user provided log shows folders like: 'cv-valid-dev', 'cv-valid-train'.
+        # These likely contain the audio/metadata directly for the downloaded language.
+        
+        # If we see these folders, and we assume we downloaded the correct language dataset,
+        # then the "language directory" is effectively the root_path itself, 
+        # or we need to adjust how we find the TSV and Clips.
+        
+        # Let's verify if 'cv-valid-dev' exists. If so, return root_path and handle paths downstream?
+        # OR: Return root_path and let the caller find the specific CSV/TSV.
+        
+        # The logs show 'cv-valid-dev.csv' exists at root.
+        # This implies the structure is:
+        # /root/
+        #   cv-valid-train.csv
+        #   cv-valid-train/ (folder with clips?)
+        #   cv-valid-dev.csv
+        #   cv-valid-dev/
+        
+        if os.path.exists(os.path.join(root_path, "cv-valid-dev.csv")):
+            print(f"Found flattened dataset structure at {root_path}")
+            return root_path
+            
+        # Fallback to original recursive search
         for root, dirs, files in os.walk(root_path):
             if lang_code in dirs:
                 candidate = os.path.join(root, lang_code)
-                # Verify it's the right one by checking for 'clips' or metadata
                 if os.path.exists(os.path.join(candidate, 'clips')) or \
                    any(f.endswith('.tsv') for f in os.listdir(candidate)):
                     print(f"Found language directory: {candidate}")
@@ -75,7 +134,28 @@ class CommonVoiceDataset:
         if not filename.endswith(".mp3"):
             filename = filename + ".mp3"
             
-        return os.path.join(self.lang_path, "clips", filename)
+        # Kaggle flattened structure often puts clips in a folder named after the split
+        # e.g. "cv-valid-dev/sample-00000.mp3"
+        # Or sometimes just a "clips" folder.
+        
+        # Check standard "clips" folder
+        clips_path = os.path.join(self.lang_path, "clips", filename)
+        if os.path.exists(clips_path):
+            return clips_path
+            
+        # Check split-named folder (e.g. cv-valid-dev/filename)
+        # We need to know which split this file belongs to, but self.split is general.
+        # However, usually files are unique enough or we check multiple places.
+        
+        # Try folders present in root
+        possible_folders = [d for d in os.listdir(self.lang_path) if os.path.isdir(os.path.join(self.lang_path, d))]
+        for folder in possible_folders:
+            candidate = os.path.join(self.lang_path, folder, filename)
+            if os.path.exists(candidate):
+                return candidate
+                
+        # If not found, return the standard clips path so error message is consistent
+        return clips_path
 
     def get_samples_by_speaker(self, client_id: str):
         """Returns all samples for a specific speaker."""

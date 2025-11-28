@@ -34,6 +34,14 @@ class ExperimentSetup:
         
         # 2. Select Speakers with Enough Data
         # Group by client_id to find speakers with many clips
+        if 'client_id' not in dataset.df.columns:
+             print("Error: 'client_id' column missing. Cannot group by speaker.")
+             # Fallback: Just take random samples if we can't ensure speaker identity?
+             # But our thesis is about speaker embeddings.
+             # If we can't get IDs, we assume the dataset might be anonymized or structure changed.
+             # For now, return empty or fail gracefully.
+             return []
+             
         speaker_counts = dataset.df['client_id'].value_counts()
         eligible_speakers = speaker_counts[speaker_counts > 10].index.tolist() # Arbitrary threshold
         

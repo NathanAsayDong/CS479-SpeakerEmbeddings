@@ -76,7 +76,24 @@ class CommonVoiceDataset:
         if 'filename' in self.df.columns and 'path' not in self.df.columns:
             self.df['path'] = self.df['filename']
             
+        # Kaggle might not have 'client_id' if anonymized or old version?
+        # Let's check columns and try to adapt or warn
         print(f"Loaded {len(self.df)} records for {language_code}/{split}")
+        print(f"Columns: {self.df.columns.tolist()}")
+        
+        if 'client_id' not in self.df.columns:
+            print("Warning: 'client_id' not found in metadata. Using dummy IDs or skipping speaker grouping.")
+            # If no client_id, we can't really group by speaker.
+            # Maybe use 'id' or index? But this defeats the purpose of "same speaker".
+            # Or maybe it's called 'client' or 'speaker_id'?
+            # Let's try to find a suitable column
+            potential_ids = [c for c in self.df.columns if 'id' in c.lower() or 'client' in c.lower() or 'speaker' in c.lower()]
+            if potential_ids:
+                print(f"Potential ID columns found: {potential_ids}. Using '{potential_ids[0]}' as client_id.")
+                self.df['client_id'] = self.df[potential_ids[0]]
+            else:
+                # If truly no ID, we can't do speaker-based experiments.
+                pass
 
     def _find_language_dir(self, root_path: str, lang_code: str):
         """Recursively finds the directory for the specific language code."""

@@ -18,6 +18,7 @@ class CommonVoiceDataset:
         # It's huge. Be careful.
         print(f"Loading Common Voice dataset for language '{language_code}'...")
         self.dataset_path = kagglehub.dataset_download("mozillaorg/common-voice")
+        print(f"Dataset path: {self.dataset_path}")
         
         # Construct path to the specific language TSV file
         # Common Voice structure on Kaggle usually: cv-corpus-X.X-20XX-XX-XX/LANGUAGE/
@@ -41,14 +42,39 @@ class CommonVoiceDataset:
 
     def _find_language_dir(self, root_path: str, lang_code: str):
         """Recursively finds the directory for the specific language code."""
+        print(f"Searching for language '{lang_code}' in {root_path}")
+        # Common Voice Kaggle structure often looks like:
+        # /.../versions/2/cv-corpus-X.X-20XX.../en/
+        # OR sometimes just /.../versions/2/en/ if it's unzipped flatly.
+        
+        # Walk and look for a directory named exactly 'en' (or 'es') that contains 'clips' subdir or .tsv files
         for root, dirs, files in os.walk(root_path):
             if lang_code in dirs:
-                return os.path.join(root, lang_code)
+                candidate = os.path.join(root, lang_code)
+                # Verify it's the right one by checking for 'clips' or metadata
+                if os.path.exists(os.path.join(candidate, 'clips')) or \
+                   any(f.endswith('.tsv') for f in os.listdir(candidate)):
+                    print(f"Found language directory: {candidate}")
+                    return candidate
+        
+        print("Could not find exact language directory. Listing root directories for debugging:")
+        try:
+            for d in os.listdir(root_path):
+                print(f" - {d}")
+        except Exception as e:
+            print(f"Error listing root: {e}")
+            
         return None
 
     def get_audio_path(self, filename: str) -> str:
         """Returns the full path to an audio file."""
         # Audio clips are usually in a 'clips' subdirectory within the language folder
+        # Sometimes filename includes 'clips/' prefix or .mp3 extension
+        
+        # Ensure filename ends with mp3 (Common Voice usually distributes mp3)
+        if not filename.endswith(".mp3"):
+            filename = filename + ".mp3"
+            
         return os.path.join(self.lang_path, "clips", filename)
 
     def get_samples_by_speaker(self, client_id: str):

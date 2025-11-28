@@ -1,5 +1,9 @@
 import whisper
-import sounddevice as sd
+try:
+    import sounddevice as sd
+except OSError:
+    print("Warning: sounddevice/PortAudio not available. Microphone recording will fail.")
+    sd = None
 import numpy as np
 import os
 import torch
@@ -19,6 +23,9 @@ class ASRService:
 
     def record_audio(self, duration: int = 10, file_path: str = "enrollment.wav"):
         """Records audio for a specific duration to a file."""
+        if sd is None:
+            raise RuntimeError("SoundDevice not available. Cannot record audio.")
+            
         print(f"Recording enrollment audio for {duration} seconds...")
         
         audio_data = sd.rec(int(duration * self.samplerate), 
@@ -36,6 +43,9 @@ class ASRService:
         Records audio from microphone and transcribes it.
         Returns tuple of (transcribed_text, audio_file_path)
         """
+        if sd is None:
+            raise RuntimeError("SoundDevice not available. Cannot record audio.")
+
         print(f"Listening for {duration} seconds...")
         
         # Record audio

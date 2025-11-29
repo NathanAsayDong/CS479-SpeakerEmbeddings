@@ -56,39 +56,39 @@ class ExperimentRunner:
                 
                 self.synth_service.tts.synthesize(spanish_text, output_path, ref_path)
                 
-                    # 2. Evaluate
-                    # A. Style Similarity (Cosine Similarity)
-                    output_embedding = self.embedding_service.extract_embedding(output_path)
+                # 2. Evaluate
+                # A. Style Similarity (Cosine Similarity)
+                output_embedding = self.embedding_service.extract_embedding(output_path)
+                
+                # Ensure embeddings are tensors and handle dimensions
+                gt_embedding_t = gt_embedding
+                output_embedding_t = output_embedding
+                
+                # If they are already tensors, unsqueeze to add batch dim if needed (SpeechBrain/PyTorch expects BxN)
+                # SpeechT5 output is typically (1, 512) or (512,)
+                if gt_embedding_t.dim() == 1:
+                    gt_embedding_t = gt_embedding_t.unsqueeze(0)
+                if output_embedding_t.dim() == 1:
+                    output_embedding_t = output_embedding_t.unsqueeze(0)
                     
-                    # Ensure embeddings are tensors and handle dimensions
-                    gt_embedding_t = gt_embedding
-                    output_embedding_t = output_embedding
+                similarity = F.cosine_similarity(gt_embedding_t, output_embedding_t)
+                
+                # Extract scalar value safely
+                # .item() works on a 0-dim or 1-dim tensor with 1 element
+                if similarity.numel() == 1:
+                    similarity_score = similarity.item()
+                else:
+                    # If batched or unexpected shape, take mean or first
+                    similarity_score = similarity.mean().item()
+                
+                # B. Translation Quality (BLEU proxy via ASR)
+                if not hasattr(self, 'asr'):
+                    from asr_service import ASRService
+                    self.asr = ASRService() 
                     
-                    # If they are already tensors, unsqueeze to add batch dim if needed (SpeechBrain/PyTorch expects BxN)
-                    # SpeechT5 output is typically (1, 512) or (512,)
-                    if gt_embedding_t.dim() == 1:
-                        gt_embedding_t = gt_embedding_t.unsqueeze(0)
-                    if output_embedding_t.dim() == 1:
-                        output_embedding_t = output_embedding_t.unsqueeze(0)
-                        
-                    similarity = F.cosine_similarity(gt_embedding_t, output_embedding_t)
-                    
-                    # Extract scalar value safely
-                    # .item() works on a 0-dim or 1-dim tensor with 1 element
-                    if similarity.numel() == 1:
-                        similarity_score = similarity.item()
-                    else:
-                        # If batched or unexpected shape, take mean or first
-                        similarity_score = similarity.mean().item()
-                    
-                    # B. Translation Quality (BLEU proxy via ASR)
-                    if not hasattr(self, 'asr'):
-                        from asr_service import ASRService
-                        self.asr = ASRService() 
-                        
-                    transcribed_spanish = self.asr.transcribe(output_path)
-                    
-                    print(f"  -> Similarity: {similarity_score:.4f} | Text match len: {len(transcribed_spanish)}/{len(spanish_text)}")
+                transcribed_spanish = self.asr.transcribe(output_path)
+                
+                print(f"  -> Similarity: {similarity_score:.4f} | Text match len: {len(transcribed_spanish)}/{len(spanish_text)}")
                 
                 self.results.append({
                     "sample_id": sample_id,

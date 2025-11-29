@@ -76,8 +76,10 @@ class CommonVoiceDataset:
         if 'filename' in self.df.columns and 'path' not in self.df.columns:
             self.df['path'] = self.df['filename']
             
-        # Kaggle might not have 'client_id' if anonymized or old version?
-        # Let's check columns and try to adapt or warn
+        # Kaggle CSV has 'text' instead of 'sentence'
+        if 'text' in self.df.columns and 'sentence' not in self.df.columns:
+            self.df['sentence'] = self.df['text']
+            
         print(f"Loaded {len(self.df)} records for {language_code}/{split}")
         print(f"Columns: {self.df.columns.tolist()}")
         

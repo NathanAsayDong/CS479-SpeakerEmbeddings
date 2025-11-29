@@ -32,5 +32,15 @@ class EmbeddingService:
             signal = signal.unsqueeze(0)
         embedding = self.speaker_model.encode_batch(signal)
         # SpeechT5 expects (1, 512) tensor
-        # We return it on the correct device for the consumer
-        return torch.tensor(embedding).squeeze(0).to(self.device)
+        # embedding is usually (Batch, Time, Channels) or similar from SpeechBrain
+        # e.g. (1, 1, 512) for xvector
+        
+        # We want to return a clean (512,) or (1, 512) tensor
+        # Squeeze batch and time dims if they exist
+        emb_tensor = torch.tensor(embedding) if not isinstance(embedding, torch.Tensor) else embedding
+        
+        # Squeeze to (512,) then unsqueeze if needed downstream, or standardize on (512,)
+        # SpeechBrain embeddings are often (1, 1, 512)
+        emb_tensor = emb_tensor.squeeze() # Should become (512,)
+        
+        return emb_tensor.to(self.device)

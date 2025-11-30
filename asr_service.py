@@ -13,13 +13,19 @@ class ASRService:
         self.model = whisper.load_model(model_name)
         self.samplerate = 16000 # Whisper expects 16kHz
 
-    def transcribe(self, audio_path: str) -> str:
-        """Transcribes audio file to text."""
-        if not os.path.exists(audio_path):
-            raise FileNotFoundError(f"Audio file not found: {audio_path}")
-        
-        result = self.model.transcribe(audio_path)
-        return result["text"].strip()
+            def transcribe(self, audio_path: str, language: str = None) -> str:
+                """Transcribes audio file to text."""
+                if not os.path.exists(audio_path):
+                    raise FileNotFoundError(f"Audio file not found: {audio_path}")
+                
+                # If language is specified, use it (Whisper supports direct transcription or translation, 
+                # but for just transcribing non-English, 'language' arg helps)
+                if language:
+                    result = self.model.transcribe(audio_path, language=language)
+                else:
+                    result = self.model.transcribe(audio_path)
+                    
+                return result["text"].strip()
 
     def record_audio(self, duration: int = 10, file_path: str = "enrollment.wav"):
         """Records audio for a specific duration to a file."""

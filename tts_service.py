@@ -28,6 +28,10 @@ class TTSService:
         # Ensure embedding is on the same device as the model
         speaker_embeddings = self.embedding_service.extract_embedding(speaker_audio_path).to(self.device)
         
+        # SpeechT5 requires (1, 512) for single inference
+        if speaker_embeddings.dim() == 1:
+            speaker_embeddings = speaker_embeddings.unsqueeze(0)
+        
         # Generate speech
         with torch.no_grad():
             speech = self.model.generate_speech(

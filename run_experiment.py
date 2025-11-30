@@ -81,14 +81,15 @@ class ExperimentRunner:
                     # If batched or unexpected shape, take mean or first
                     similarity_score = similarity.mean().item()
                 
-                # B. Translation Quality (BLEU proxy via ASR)
-                if not hasattr(self, 'asr'):
-                    from asr_service import ASRService
-                    self.asr = ASRService() 
+                    # B. Translation Quality (BLEU proxy via ASR)
+                    if not hasattr(self, 'asr'):
+                        from asr_service import ASRService
+                        self.asr = ASRService() 
+                        
+                    # Transcribe the SPANISH output, so tell Whisper it is Spanish
+                    transcribed_spanish = self.asr.transcribe(output_path, language="es")
                     
-                transcribed_spanish = self.asr.transcribe(output_path)
-                
-                print(f"  -> Similarity: {similarity_score:.4f} | Text match len: {len(transcribed_spanish)}/{len(spanish_text)}")
+                    print(f"  -> Similarity: {similarity_score:.4f} | Text match len: {len(transcribed_spanish)}/{len(spanish_text)}")
                 
                 self.results.append({
                     "sample_id": sample_id,

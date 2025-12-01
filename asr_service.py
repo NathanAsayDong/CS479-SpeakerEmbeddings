@@ -22,7 +22,7 @@ class ASRService:
         # but for just transcribing non-English, 'language' arg helps)
         if language:
             decoding_options = whisper.DecodingOptions(language=language)
-            result = self.model.transcribe(audio_path, decoding_options=decoding_options)
+            result = self.model.transcribe(audio_path, decode_options=decoding_options)
         else:
             result = self.model.transcribe(audio_path)
             

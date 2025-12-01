@@ -21,14 +21,13 @@ class ASRService:
         # If language is specified, use it (Whisper supports direct transcription or translation, 
         # but for just transcribing non-English, 'language' arg helps)
         if language:
-            decoding_options = whisper.DecodingOptions(language=language)
-            result = self.model.transcribe(audio_path, decode_options=decoding_options)
+            result = self.model.transcribe(audio_path, decode_options={"language": language})
         else:
             result = self.model.transcribe(audio_path)
-            
+
         return result["text"].strip()
 
-    def record_audio(self, duration: int = 10, file_path: str = "enrollment.wav"):
+    def record_audio(self, duration: int = 10, file_path: str = "enrollment.wav", language: str = None):
         """Records audio for a specific duration to a file."""
         if sd is None:
             raise RuntimeError("SoundDevice not available. Cannot record audio.")

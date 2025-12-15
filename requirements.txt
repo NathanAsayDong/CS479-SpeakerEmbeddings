@@ -10,3 +10,4 @@ pydantic
 torchcodec
 datasets
 kagglehub[pandas-datasets]
+ipywidgets

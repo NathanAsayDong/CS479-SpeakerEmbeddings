@@ -1,0 +1,27 @@
+evaluator_number,evaluator_name,item_key,speaker_id,pair_index,method,preference,source_text_en,target_text_es,general_notes,method_comments,saved_at_unix,translation_accuracy,speaker_persona_match,naturalness,overall
+4,,spk=1055|pair=0,1055,0,zero_shot,fine_tune,Goes by Crumbs.,Se hace llamar Crumbs.,,,1765915937.668588,4,2,2,2
+4,,spk=1055|pair=0,1055,0,fine_tune,zero_shot,Goes by Crumbs.,Se hace llamar Crumbs.,,,1765915937.668588,2,4,4,3
+4,,spk=1055|pair=2,1055,2,zero_shot,zero_shot,"Now, before you give us an answer, I want to impress you with three things.","Antes de darnos una respuesta, quiero que sepa tres cosas.",,,1765908464.0707588,1,3,3,2
+4,,spk=1055|pair=2,1055,2,fine_tune,zero_shot,"Now, before you give us an answer, I want to impress you with three things.","Antes de darnos una respuesta, quiero que sepa tres cosas.",,,1765908464.0707588,2,3,2,1
+4,,spk=1055|pair=3,1055,3,zero_shot,fine_tune,It's almost time for school.,Es casi la hora de ir a la escuela.,,,1765908855.161113,2,3,3,2
+4,,spk=1055|pair=3,1055,3,fine_tune,fine_tune,It's almost time for school.,Es casi la hora de ir a la escuela.,,,1765908855.161113,4,3,4,3
+4,,spk=28165|pair=4,28165,4,zero_shot,fine_tune,Don't think you will be able to destroy me that easily.,No creas que puedes acabar conmigo.,,,1765908938.0340962,2,2,3,2
+4,,spk=28165|pair=4,28165,4,fine_tune,zero_shot,Don't think you will be able to destroy me that easily.,No creas que puedes acabar conmigo.,,,1765908938.0340962,3,4,2,3
+4,,spk=124992|pair=0,124992,0,zero_shot,fine_tune,Goes by Crumbs.,Se hace llamar Crumbs.,,,1765908613.451916,3,3,3,3
+4,,spk=124992|pair=0,124992,0,fine_tune,fine_tune,Goes by Crumbs.,Se hace llamar Crumbs.,,,1765908613.451916,3,4,3,4
+4,,spk=124992|pair=2,124992,2,zero_shot,no_preference,"Now, before you give us an answer, I want to impress you with three things.","Antes de darnos una respuesta, quiero que sepa tres cosas.",,,1765908956.253282,3,3,3,3
+4,,spk=124992|pair=2,124992,2,fine_tune,no_preference,"Now, before you give us an answer, I want to impress you with three things.","Antes de darnos una respuesta, quiero que sepa tres cosas.",,,1765908956.253282,3,3,3,3
+4,,spk=124992|pair=3,124992,3,zero_shot,no_preference,It's almost time for school.,Es casi la hora de ir a la escuela.,,,1765908970.754806,3,3,3,3
+4,,spk=124992|pair=3,124992,3,fine_tune,fine_tune,It's almost time for school.,Es casi la hora de ir a la escuela.,,,1765908970.754806,3,3,3,3
+4,,spk=124992|pair=4,124992,4,zero_shot,zero_shot,Don't think you will be able to destroy me that easily.,No creas que puedes acabar conmigo.,,,1765916172.703098,3,3,3,3
+4,,spk=124992|pair=4,124992,4,fine_tune,zero_shot,Don't think you will be able to destroy me that easily.,No creas que puedes acabar conmigo.,,,1765916172.703098,3,4,2,2
+4,,spk=1055|pair=1,1055,1,zero_shot,no_preference,"Gladdie, of course.","Gladdie, por supuesto.",,,1765908826.785516,3,3,3,3
+4,,spk=1055|pair=1,1055,1,fine_tune,fine_tune,"Gladdie, of course.","Gladdie, por supuesto.",,,1765908826.785516,3,3,3,3
+4,,spk=28165|pair=0,28165,0,zero_shot,zero_shot,Goes by Crumbs.,Se hace llamar Crumbs.,,,1765908878.031463,4,3,3,4
+4,,spk=28165|pair=0,28165,0,fine_tune,zero_shot,Goes by Crumbs.,Se hace llamar Crumbs.,,,1765908878.031463,3,3,3,3
+4,,spk=28165|pair=3,28165,3,zero_shot,fine_tune,It's almost time for school.,Es casi la hora de ir a la escuela.,,,1765908918.752644,3,2,3,3
+4,,spk=28165|pair=3,28165,3,fine_tune,fine_tune,It's almost time for school.,Es casi la hora de ir a la escuela.,,,1765908918.752644,4,3,3,4
+4,,spk=1055|pair=4,1055,4,zero_shot,fine_tune,Don't think you will be able to destroy me that easily.,No creas que puedes acabar conmigo.,,,1765908868.0873442,4,3,3,3
+4,,spk=1055|pair=4,1055,4,fine_tune,zero_shot,Don't think you will be able to destroy me that easily.,No creas que puedes acabar conmigo.,,,1765908868.0873442,3,3,3,3
+4,,spk=28165|pair=1,28165,1,zero_shot,fine_tune,"Gladdie, of course.","Gladdie, por supuesto.",,,1765908888.037602,3,2,3,3
+4,,spk=28165|pair=1,28165,1,fine_tune,zero_shot,"Gladdie, of course.","Gladdie, por supuesto.",,,1765908888.037602,3,3,2,3

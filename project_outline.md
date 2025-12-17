@@ -1,182 +1,102 @@
-# Project Plan: Speaker Adaptation for Speech-to-Speech Translation (Cascaded Pipeline)
+# Project Outline: Speaker Adaptation for English → Spanish Speech Generation
 
 ## Goal
-Build and evaluate **speech-to-speech translation (S2ST)** systems that translate spoken input into spoken output in a target language **while preserving the source speaker’s voice** (voice cloning / speaker identity). Compare:
+Implement and evaluate a speaker-adapted speech generation pipeline that produces **Spanish speech** while matching a target speaker’s voice. In the final code, this became a comparison of:
 
-- **Conditioning-only (zero-shot)**: pretrained TTS conditioned on a speaker embedding from short enrollment audio (no weight updates).
-- **Full TTS weight fine-tuning**: update TTS weights on a target speaker’s (text, audio) pairs.
-- **Parameter-efficient fine-tuning (PEFT)**: update a small number of parameters (e.g., adapters/LoRA) while freezing most weights.
-
-All approaches are evaluated inside the same **cascaded S2ST pipeline**: ASR → MT → TTS.
+- **Zero-shot speaker conditioning**: pretrained SpeechT5 TTS conditioned on a **SpeechBrain x-vector** extracted from a short speaker reference clip.
+- **Full fine-tuning**: SpeechT5 TTS weights fine-tuned on a single VoxPopuli speaker’s English speech + transcripts (standard supervised TTS), then used to synthesize Spanish text with the same x-vector conditioning.
 
 ## Research Question
-**Given a fixed cascaded S2ST pipeline, which speaker adaptation strategy produces the best trade-off between (a) speaker identity preservation and (b) translation intelligibility/quality, for a given amount of enrollment data?**
+**Does full fine-tuning of SpeechT5 on a target speaker improve speaker similarity over zero-shot conditioning, without significantly harming intelligibility of the Spanish output?**
 
-Operationally, “more effective” means **better speaker preservation** at a given **translation quality** and **data budget** (seconds/minutes of speaker enrollment audio).
+We additionally tested how **reference-audio duration** impacts the zero-shot conditioning baseline.
 
-## Hypotheses
-- **H1 (zero-shot baseline)**: Conditioning-only will work reasonably with very small enrollment (seconds), but will have limited ceiling on speaker similarity.
-- **H2 (data efficiency)**: PEFT will outperform conditioning-only at the same enrollment budget while being more stable than full fine-tuning for small data.
-- **H3 (overfitting trade-off)**: Full fine-tuning can achieve the highest similarity with enough data, but may hurt intelligibility/pronunciation when data is limited.
+## Hypotheses (aligned to what we ran)
+- **H1 (zero-shot duration effect)**: Longer reference clips (2–10s) will improve speaker similarity for zero-shot conditioning.
+- **H2 (fine-tune vs zero-shot)**: Fine-tuned SpeechT5 will improve speaker similarity compared to the baseline for the same reference clip, but may trade off intelligibility on some sentences.
 
-## Systems
-### Cascaded pipeline (shared across all experiments)
-- **ASR**: Whisper (ablate `base` vs `small`).
-- **MT**: MarianMT (Opus-MT) for chosen language pair.
-- **TTS**: SpeechT5 + HiFi-GAN vocoder.
-- **Speaker representation**: SpeechBrain x-vector embeddings (used for conditioning + evaluation).
+## Implemented Systems
+### Models / components used in code
+- **TTS**: `microsoft/speecht5_tts` + `microsoft/speecht5_hifigan`
+- **Speaker embedding**: `speechbrain/spkrec-xvect-voxceleb` (x-vectors), used for both conditioning and evaluation
+- **ASR (used as an evaluation proxy)**: Whisper `large-v3-turbo` (transcribe synthesized Spanish audio)
+- **Text prompts**: EN/ES sentence pairs from `Helsinki-NLP/opus-100` (`en-es`, validation split)
+- **Auxiliary (used in one loop)**: a text translation model (`google-t5/t5-large`) for backtranslation-style checks in the zero-shot experiment loop
 
-### Speaker adaptation variants (what changes between systems)
-- **Conditioning-only (zero-shot)**: do not update weights; use enrollment audio to compute speaker embedding(s).
-- **Full fine-tune**: update SpeechT5 TTS weights on (text, audio) from the target speaker.
-- **PEFT**: freeze most weights; train adapter/LoRA parameters on (text, audio) from the target speaker.
+### Speaker adaptation variants (actual)
+- **Zero-shot**: no weight updates; condition SpeechT5 on x-vector from a speaker reference clip
+- **Full fine-tune**: fine-tune SpeechT5 on VoxPopuli samples for a single speaker (text→speech), save the model, then use it for synthesis
 
-## Datasets (planned)
-Use one dataset for **translation scoring** and one for **speaker adaptation**.
+> Note: **PEFT/LoRA/adapters were planned but not implemented** in the final code.
 
-### Speech Translation (speech + gold translation text)
-- **CoVoST 2**: Common Voice speech translation pairs (speech → translated text).
-- **MuST-C**: TED talks speech translation (backup/alternative benchmark).
+## Datasets (actual)
+### Speaker data (voice / adaptation)
+- **VoxPopuli (English)**: `facebook/voxpopuli`, used to obtain per-speaker audio + transcripts
+- Experiments focused on **3 speakers**: `1055`, `28165`, `124992`
+- A small subset for those speakers was saved to disk at `data/voxpopuli_en_validation_3speakers` for fine-tuning.
 
-### Speaker adaptation / voice cloning (many utterances per speaker)
-- **VCTK**: clean multi-speaker English speech (controlled experiments).
-- **LibriTTS**: larger multi-speaker corpus (scaling enrollment durations).
+### Spanish text targets
+- **Opus-100 EN/ES**: `Helsinki-NLP/opus-100`, `en-es`, validation split
+- Sentences were filtered to be short (to reduce SpeechT5 failures on very long inputs).
 
-## Metrics
-### Speaker preservation (voice cloning)
-- **Speaker embedding cosine similarity** between source speech and synthesized target speech (x-vector based).
-- (Optional) **speaker verification**: same/different decision accuracy or EER using embeddings.
+## Metrics (actual)
+### Speaker similarity (voice preservation)
+- **Cosine similarity** between x-vectors:
+  - x-vector(reference speaker audio) vs x-vector(synthesized Spanish audio)
 
-### Translation quality / intelligibility
-- **ASR-on-output proxy**: transcribe synthesized target-language audio (Whisper with language hint) and compare to gold target text.
-  - Score with **WER** and/or **chrF** (and BLEU if desired).
+### Intelligibility proxy (Spanish audio)
+- **Sentence BLEU** between:
+  - reference Spanish text (gold ES sentence) and
+  - **Whisper transcript** of synthesized Spanish audio
 
-### Efficiency
-- Runtime per stage (ASR/MT/TTS) and total pipeline time.
+## Experiments & Repo Artifacts
+### Experiment A: Zero-shot conditioning vs reference duration sweep
+For each speaker and duration \(d \in \{2,4,6,8,10\}\) seconds:
+- Trim VoxPopuli speaker audio to \(d\) seconds and use it as the reference clip
+- Synthesize Spanish for 5 fixed EN/ES pairs
+- Compute mean BLEU + mean cosine similarity
+- Saved qualitative example per (speaker, duration):
+  - `results/zero_shot/speaker_{id}/duration_{d}/source_audio.wav`
+  - `results/zero_shot/speaker_{id}/duration_{d}/output_spanish_audio.wav`
+  - `results/zero_shot/speaker_{id}/duration_{d}/sample_input.json`
+- Saved summary CSVs:
+  - `results/zero_shot/results_{speaker_id}.csv`
 
-## Experiments
-### Experiment 1: Speaker enrollment data-efficiency curve (core)
-For each speaker, fine-tune/adapt using different enrollment budgets:
-- **Budgets**: 5s, 30s, 2m, 10m (adjust to available per-speaker audio).
-- **Compare**: conditioning-only vs full fine-tune vs PEFT under the same budgets.
-- **Report**: curves of speaker similarity vs translation quality.
+### Experiment B: Full fine-tuning SpeechT5 per speaker
+- Fine-tune SpeechT5 on a single speaker’s VoxPopuli samples (train/test split)
+- Saved:
+  - training outputs/checkpoints: `speecht5_finetuned_voxpopuli_speaker_{speaker_id}/...`
+  - exported models: `models/finetuned_models/speecht5_finetuned_voxpopuli_speaker_{speaker_id}/`
+- Fine-tuned experiment outputs:
+  - `results/fine_tune/` (including `results_{speaker_id}.csv` and sample folders)
 
-#### Experiment 1 details: what “fine-tuning” means (weights, not just embeddings)
-This project will treat **conditioning-only** as the zero-shot baseline and then compare it to **two weight-updating methods** (full fine-tune and PEFT).
+### Experiment C: Head-to-head comparison (zero-shot vs fine-tuned)
+For each speaker (fixed reference clip from `results/zero_shot/speaker_{id}/duration_4/source_audio.wav`):
+- Generate Spanish audio for 20 random EN/ES pairs
+- Compute BLEU + cosine similarity for both methods
+- Saved per-speaker CSVs:
+  - `results/comparison/speaker_{id}/results.csv`
 
-##### Training data schema (per utterance)
-For speaker-specific TTS fine-tuning, each training example must include:
-- `speaker_id`: string (e.g., `p225`)
-- `audio_path`: path to waveform (WAV preferred)
-- `text`: transcript of the audio **in the language the speaker actually spoke** (typically English for VCTK/LibriTTS)
-- optional: `duration_sec`, `sample_rate`
+## Human Evaluation (Streamlit UI)
+To complement automatic metrics, a Streamlit app collected human ratings comparing **zero-shot** vs **fine-tuned** outputs:
 
-This is **standard supervised TTS** data: \( \text{text} \rightarrow \text{speech} \).  
-Note: **parallel translation labels are not required** to adapt the speaker’s voice in the cascaded system, because translation happens in the MT component.
+- Notebook-generated audio:
+  - `data/audio/speaker_{ID}/zero_shot_{i}.wav`
+  - `data/audio/speaker_{ID}/fine_tuned_{i}.wav`
+  - prompts: `data/audio/five_random_sentence_pairs.json`
+- UI: `human_evaluation/app.py`
+- Ratings:
+  - translation_accuracy, speaker_persona_match, naturalness, overall
+- Saved to:
+  - `results/human-evalution/evalator-{number}/human_eval_{timestamp}.json`
+  - `results/human-evalution/evalator-{number}/responses.csv`
 
-##### How we fine-tune (cascaded system)
-For each target speaker \(s\) and each budget \(B\):
-- Build \(D^{\text{train}}_{s,B}\): a set of utterances from speaker \(s\) totaling \(B\) seconds.
-- Build \(D^{\text{dev}}_{s}\) / \(D^{\text{test}}_{s}\): held-out utterances from the same speaker **not used in training**.
-- **Conditioning-only**: compute speaker embedding(s) from \(D^{\text{train}}_{s,B}\) (e.g., average x-vectors); no training.
-- **Full fine-tune**: fine-tune **SpeechT5 TTS** on \(D^{\text{train}}_{s,B}\) (text→speech).
-- **PEFT**: fine-tune only adapter/LoRA parameters on \(D^{\text{train}}_{s,B}\).
-- Keep the **speaker embedding extractor** (SpeechBrain x-vector) frozen; use it for conditioning (and/or average embeddings over the enrollment set).
+## Limitations / What changed from the original plan
+- No PEFT/LoRA experiments (only zero-shot vs full fine-tune)
+- No end-to-end “speech input → ASR → MT → TTS” dataset evaluation (e.g., CoVoST2); instead, Spanish targets came from Opus-100 text pairs and ASR was used on the synthesized output as an intelligibility proxy
+- Automatic metric used was sentence BLEU (not chrF/WER), and speaker similarity was x-vector cosine similarity (no EER/SV classifier)
 
-Implementation notes (report what is frozen vs trained):
-- **Vocoder**: typically keep the HiFi-GAN vocoder frozen to reduce instability unless you have substantial speaker data.
-- **Stability**: use small learning rates, early stopping on \(D^{\text{dev}}_{s}\), and keep a fixed random seed for fair comparison across methods.
-
-##### How we evaluate (translation vs voice)
-After fine-tuning on speaker \(s\), evaluation runs on a fixed ST test set (e.g., CoVoST2/MuST-C):
-- Input: source speech (any speaker) → ASR → MT → **fine-tuned TTS(s)** for the target speaker voice.
-- Output: target-language speech *in speaker \(s\)’s voice*.
-
-We report two families of metrics:
-- **Speaker preservation**: cosine similarity of x-vectors between (a held-out reference utterance from speaker \(s\)) and (the synthesized translation audio).
-- **Translation/intelligibility**: ASR the synthesized target-language audio and score vs the gold target text (WER/chrF/BLEU).
-
-##### Why two datasets are needed
-To fine-tune voice, we need a dataset with **many utterances per speaker + transcripts** (VCTK/LibriTTS).  
-To score translation quality, we need a dataset with **speech + gold translations** (CoVoST2/MuST-C).
-
-### Experiment 2: Reference leakage control (validity check)
-Ensure enrollment/reference audio is **not the same utterance** as the content being translated.
-- Same speaker, different utterance (valid)
-- Different speaker (negative control)
-- Same utterance (upper-bound/leakage baseline)
-
-### Experiment 3: Robustness (error propagation)
-Add noise/reverb to the source speech at several SNR levels and compare degradation:
-- translation proxy metrics
-- speaker similarity
-
-### Experiment 4: Ablations
-- **ASR size**: Whisper `base` vs `small` (and `medium` if feasible).
-- **Enrollment duration**: replicate 5/10/20s (repo-style) + expanded budgets if using VCTK/LibriTTS.
-
----
-
-## Professor Assignment Outline (rubric reference)
-
-This write-up serves as the primary evaluation for your final project. It should clearly describe your project's motivation, methodology, results, and context within the field of Machine Translation. The goal is to practice communicating technical work in a format resembling a research article.
-
-ACL Article Overleaf Template
-
-(Use APA style if you do not use the ACL LaTeX template)
-
-Total Points: 40 (14.5% of final grade)
-
-Please include the following sections in the Final Project Write-up:
-
-1. Abstract (2 points)
-
-Provides a concise summary of the project.
-Briefly covers the problem, the approach/methodology used, key results, and main conclusions.
-Engages the reader and clearly states the project's contribution or focus.
-2. Introduction (4 points)
-
-(Problem Definition & Motivation): Clearly defines the specific MT problem or task being addressed. Explains the motivation and significance of the project.
-(Objectives): States clear, specific objectives or expected outcomes for the project.
-(Organization): Briefly outlines the structure of the rest of the paper.
-3. Related Work (4 points)
-
-Minimum of 4 references.
-Summarizes relevant existing approaches, models, or papers in the specific area of MT the project addresses.
-Discusses how the current project relates to this prior work (e.g., builds upon, differs from, addresses limitations of).
-Demonstrates understanding of the project's context within the field.
-Citations are used appropriately for all referenced work.
-4. Dataset (2 points)
-
-Clearly describes the datasets/corpora used (source, size, language pairs, preprocessing steps).
-Provides sufficient detail for a reader to understand the resources involved.
-5. Methodology (6 points)
-
-Provides a clear and detailed description of the project's technical approach.
-Explains the architecture of the MT system(s) built or used.
-Details the algorithms implemented or applied.
-Clearly defines the inputs and outputs of the system/components.
-Includes sufficient detail that a knowledgeable reader could conceptually understand how the project was executed (though not necessarily reproduce it fully without code).
-6. Experiments (6 points)
-
-Details the experimental setup (e.g., train/dev/test splits, baseline systems used for comparison, specific evaluation scripts/settings).
-Clearly describes the evaluation methodology used (e.g., automatic metrics like BLEU, METEOR, TER; human evaluation; qualitative analysis). Justifies why the chosen methods are appropriate for the project's goals.
-7. Results & Discussion (6 points)
-
-Presents the results clearly and effectively (e.g., using tables, figures/graphs where appropriate).
-(Analysis & Comparison): Analyzes the obtained results. Compares results against initial expectations, baseline performance (if applicable), and relevant results from the related work discussed earlier. 
-(Interpretation): Discusses the implications of the results. What was learned? Were the objectives met? Addresses limitations or unexpected findings.
-(Qualitative Examples - Optional but Recommended): May include specific examples of input/output translations to illustrate system performance, strengths, or weaknesses.
-8. Conclusion & Future Work (4 points)
-
-(Conclusion): Summarizes the key contributions, findings, and takeaways of the project. Briefly reiterates the main message. 
-(Future Work): Outlines specific, plausible ideas for future research or improvements building upon the current project.
-9. Reflection (1 point) 
-
-Any spiritual insights working this project has given you or how it could be used or extended to contribute to building the kingdom of God 
-Overall Quality & Presentation (5 points)
-
-(Clarity & Writing Style): Written clearly, concisely, and professionally. Correct grammar, spelling, and punctuation. Demonstrates mastery of the topic through writing.
-(Organization & Structure): Logical flow between sections. Effective use of headings and subheadings. Follows a structure appropriate for a technical report/article.
-(Formatting & Length): Adheres to any specified formatting guidelines (e.g., template, font, margins, citation style) and length constraints. If using the ACL LaTeX template, a minimum of 4 pages is required (not including references). If using APA style, a minimum of 8 pages is required (not including references or title page).
-(References): Includes a properly formatted bibliography/reference list for all cited works.
+## Future Work
+- Add a true speech-input benchmark and run the full cascaded ASR→MT→TTS pipeline end-to-end
+- Implement PEFT (LoRA/adapters) on SpeechT5 and compare vs full fine-tuning
+- Add WER/chrF and a speaker verification-style metric (EER) using x-vectors

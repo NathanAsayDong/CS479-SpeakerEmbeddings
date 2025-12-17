@@ -1,0 +1,537 @@
+{
+  "evaluator_number": 3,
+  "evaluator_name": "",
+  "exported_at_unix": 1765908993.611391,
+  "exported_at": "20251216-111633",
+  "n_items_total": 15,
+  "n_items_completed": 13,
+  "samples_discovered": [
+    {
+      "speaker_id": "1055",
+      "pair_index": 0,
+      "source_text_en": "Goes by Crumbs.",
+      "target_text_es": "Se hace llamar Crumbs.",
+      "reference_audio_wav": "/Users/nathandong/Desktop/School/CS479_Project/results/zero_shot/speaker_1055/duration_4/source_audio.wav",
+      "zero_shot_audio_wav": "/Users/nathandong/Desktop/School/CS479_Project/data/audio/speaker_1055/zero_shot_0.wav",
+      "fine_tune_audio_wav": "/Users/nathandong/Desktop/School/CS479_Project/data/audio/speaker_1055/fine_tuned_0.wav"
+    },
+    {
+      "speaker_id": "1055",
+      "pair_index": 1,
+      "source_text_en": "Gladdie, of course.",
+      "target_text_es": "Gladdie, por supuesto.",
+      "reference_audio_wav": "/Users/nathandong/Desktop/School/CS479_Project/results/zero_shot/speaker_1055/duration_4/source_audio.wav",
+      "zero_shot_audio_wav": "/Users/nathandong/Desktop/School/CS479_Project/data/audio/speaker_1055/zero_shot_1.wav",
+      "fine_tune_audio_wav": "/Users/nathandong/Desktop/School/CS479_Project/data/audio/speaker_1055/fine_tuned_1.wav"
+    },
+    {
+      "speaker_id": "1055",
+      "pair_index": 2,
+      "source_text_en": "Now, before you give us an answer, I want to impress you with three things.",
+      "target_text_es": "Antes de darnos una respuesta, quiero que sepa tres cosas.",
+      "reference_audio_wav": "/Users/nathandong/Desktop/School/CS479_Project/results/zero_shot/speaker_1055/duration_4/source_audio.wav",
+      "zero_shot_audio_wav": "/Users/nathandong/Desktop/School/CS479_Project/data/audio/speaker_1055/zero_shot_2.wav",
+      "fine_tune_audio_wav": "/Users/nathandong/Desktop/School/CS479_Project/data/audio/speaker_1055/fine_tuned_2.wav"
+    },
+    {
+      "speaker_id": "1055",
+      "pair_index": 3,
+      "source_text_en": "It's almost time for school.",
+      "target_text_es": "Es casi la hora de ir a la escuela.",
+      "reference_audio_wav": "/Users/nathandong/Desktop/School/CS479_Project/results/zero_shot/speaker_1055/duration_4/source_audio.wav",
+      "zero_shot_audio_wav": "/Users/nathandong/Desktop/School/CS479_Project/data/audio/speaker_1055/zero_shot_3.wav",
+      "fine_tune_audio_wav": "/Users/nathandong/Desktop/School/CS479_Project/data/audio/speaker_1055/fine_tuned_3.wav"
+    },
+    {
+      "speaker_id": "1055",
+      "pair_index": 4,
+      "source_text_en": "Don't think you will be able to destroy me that easily.",
+      "target_text_es": "No creas que puedes acabar conmigo.",
+      "reference_audio_wav": "/Users/nathandong/Desktop/School/CS479_Project/results/zero_shot/speaker_1055/duration_4/source_audio.wav",
+      "zero_shot_audio_wav": "/Users/nathandong/Desktop/School/CS479_Project/data/audio/speaker_1055/zero_shot_4.wav",
+      "fine_tune_audio_wav": "/Users/nathandong/Desktop/School/CS479_Project/data/audio/speaker_1055/fine_tuned_4.wav"
+    },
+    {
+      "speaker_id": "28165",
+      "pair_index": 0,
+      "source_text_en": "Goes by Crumbs.",
+      "target_text_es": "Se hace llamar Crumbs.",
+      "reference_audio_wav": "/Users/nathandong/Desktop/School/CS479_Project/results/zero_shot/speaker_28165/duration_4/source_audio.wav",
+      "zero_shot_audio_wav": "/Users/nathandong/Desktop/School/CS479_Project/data/audio/speaker_28165/zero_shot_0.wav",
+      "fine_tune_audio_wav": "/Users/nathandong/Desktop/School/CS479_Project/data/audio/speaker_28165/fine_tuned_0.wav"
+    },
+    {
+      "speaker_id": "28165",
+      "pair_index": 1,
+      "source_text_en": "Gladdie, of course.",
+      "target_text_es": "Gladdie, por supuesto.",
+      "reference_audio_wav": "/Users/nathandong/Desktop/School/CS479_Project/results/zero_shot/speaker_28165/duration_4/source_audio.wav",
+      "zero_shot_audio_wav": "/Users/nathandong/Desktop/School/CS479_Project/data/audio/speaker_28165/zero_shot_1.wav",
+      "fine_tune_audio_wav": "/Users/nathandong/Desktop/School/CS479_Project/data/audio/speaker_28165/fine_tuned_1.wav"
+    },
+    {
+      "speaker_id": "28165",
+      "pair_index": 2,
+      "source_text_en": "Now, before you give us an answer, I want to impress you with three things.",
+      "target_text_es": "Antes de darnos una respuesta, quiero que sepa tres cosas.",
+      "reference_audio_wav": "/Users/nathandong/Desktop/School/CS479_Project/results/zero_shot/speaker_28165/duration_4/source_audio.wav",
+      "zero_shot_audio_wav": "/Users/nathandong/Desktop/School/CS479_Project/data/audio/speaker_28165/zero_shot_2.wav",
+      "fine_tune_audio_wav": "/Users/nathandong/Desktop/School/CS479_Project/data/audio/speaker_28165/fine_tuned_2.wav"
+    },
+    {
+      "speaker_id": "28165",
+      "pair_index": 3,
+      "source_text_en": "It's almost time for school.",
+      "target_text_es": "Es casi la hora de ir a la escuela.",
+      "reference_audio_wav": "/Users/nathandong/Desktop/School/CS479_Project/results/zero_shot/speaker_28165/duration_4/source_audio.wav",
+      "zero_shot_audio_wav": "/Users/nathandong/Desktop/School/CS479_Project/data/audio/speaker_28165/zero_shot_3.wav",
+      "fine_tune_audio_wav": "/Users/nathandong/Desktop/School/CS479_Project/data/audio/speaker_28165/fine_tuned_3.wav"
+    },
+    {
+      "speaker_id": "28165",
+      "pair_index": 4,
+      "source_text_en": "Don't think you will be able to destroy me that easily.",
+      "target_text_es": "No creas que puedes acabar conmigo.",
+      "reference_audio_wav": "/Users/nathandong/Desktop/School/CS479_Project/results/zero_shot/speaker_28165/duration_4/source_audio.wav",
+      "zero_shot_audio_wav": "/Users/nathandong/Desktop/School/CS479_Project/data/audio/speaker_28165/zero_shot_4.wav",
+      "fine_tune_audio_wav": "/Users/nathandong/Desktop/School/CS479_Project/data/audio/speaker_28165/fine_tuned_4.wav"
+    },
+    {
+      "speaker_id": "124992",
+      "pair_index": 0,
+      "source_text_en": "Goes by Crumbs.",
+      "target_text_es": "Se hace llamar Crumbs.",
+      "reference_audio_wav": "/Users/nathandong/Desktop/School/CS479_Project/results/zero_shot/speaker_124992/duration_4/source_audio.wav",
+      "zero_shot_audio_wav": "/Users/nathandong/Desktop/School/CS479_Project/data/audio/speaker_124992/zero_shot_0.wav",
+      "fine_tune_audio_wav": "/Users/nathandong/Desktop/School/CS479_Project/data/audio/speaker_124992/fine_tuned_0.wav"
+    },
+    {
+      "speaker_id": "124992",
+      "pair_index": 1,
+      "source_text_en": "Gladdie, of course.",
+      "target_text_es": "Gladdie, por supuesto.",
+      "reference_audio_wav": "/Users/nathandong/Desktop/School/CS479_Project/results/zero_shot/speaker_124992/duration_4/source_audio.wav",
+      "zero_shot_audio_wav": "/Users/nathandong/Desktop/School/CS479_Project/data/audio/speaker_124992/zero_shot_1.wav",
+      "fine_tune_audio_wav": "/Users/nathandong/Desktop/School/CS479_Project/data/audio/speaker_124992/fine_tuned_1.wav"
+    },
+    {
+      "speaker_id": "124992",
+      "pair_index": 2,
+      "source_text_en": "Now, before you give us an answer, I want to impress you with three things.",
+      "target_text_es": "Antes de darnos una respuesta, quiero que sepa tres cosas.",
+      "reference_audio_wav": "/Users/nathandong/Desktop/School/CS479_Project/results/zero_shot/speaker_124992/duration_4/source_audio.wav",
+      "zero_shot_audio_wav": "/Users/nathandong/Desktop/School/CS479_Project/data/audio/speaker_124992/zero_shot_2.wav",
+      "fine_tune_audio_wav": "/Users/nathandong/Desktop/School/CS479_Project/data/audio/speaker_124992/fine_tuned_2.wav"
+    },
+    {
+      "speaker_id": "124992",
+      "pair_index": 3,
+      "source_text_en": "It's almost time for school.",
+      "target_text_es": "Es casi la hora de ir a la escuela.",
+      "reference_audio_wav": "/Users/nathandong/Desktop/School/CS479_Project/results/zero_shot/speaker_124992/duration_4/source_audio.wav",
+      "zero_shot_audio_wav": "/Users/nathandong/Desktop/School/CS479_Project/data/audio/speaker_124992/zero_shot_3.wav",
+      "fine_tune_audio_wav": "/Users/nathandong/Desktop/School/CS479_Project/data/audio/speaker_124992/fine_tuned_3.wav"
+    },
+    {
+      "speaker_id": "124992",
+      "pair_index": 4,
+      "source_text_en": "Don't think you will be able to destroy me that easily.",
+      "target_text_es": "No creas que puedes acabar conmigo.",
+      "reference_audio_wav": "/Users/nathandong/Desktop/School/CS479_Project/results/zero_shot/speaker_124992/duration_4/source_audio.wav",
+      "zero_shot_audio_wav": "/Users/nathandong/Desktop/School/CS479_Project/data/audio/speaker_124992/zero_shot_4.wav",
+      "fine_tune_audio_wav": "/Users/nathandong/Desktop/School/CS479_Project/data/audio/speaker_124992/fine_tuned_4.wav"
+    }
+  ],
+  "responses": {
+    "spk=1055|pair=0": {
+      "speaker_id": "1055",
+      "pair_index": 0,
+      "source_text_en": "Goes by Crumbs.",
+      "target_text_es": "Se hace llamar Crumbs.",
+      "paths": {
+        "reference_audio_wav": "/Users/nathandong/Desktop/School/CS479_Project/results/zero_shot/speaker_1055/duration_4/source_audio.wav",
+        "zero_shot_audio_wav": "/Users/nathandong/Desktop/School/CS479_Project/data/audio/speaker_1055/zero_shot_0.wav",
+        "fine_tune_audio_wav": "/Users/nathandong/Desktop/School/CS479_Project/data/audio/speaker_1055/fine_tuned_0.wav"
+      },
+      "ratings": {
+        "zero_shot": {
+          "translation_accuracy": 3,
+          "speaker_persona_match": 4,
+          "naturalness": 3,
+          "overall": 3,
+          "comments": ""
+        },
+        "fine_tune": {
+          "translation_accuracy": 3,
+          "speaker_persona_match": 3,
+          "naturalness": 3,
+          "overall": 3,
+          "comments": ""
+        },
+        "preference": "zero_shot"
+      },
+      "general_notes": "",
+      "saved_at_unix": 1765908818.3712041
+    },
+    "spk=1055|pair=2": {
+      "speaker_id": "1055",
+      "pair_index": 2,
+      "source_text_en": "Now, before you give us an answer, I want to impress you with three things.",
+      "target_text_es": "Antes de darnos una respuesta, quiero que sepa tres cosas.",
+      "paths": {
+        "reference_audio_wav": "/Users/nathandong/Desktop/School/CS479_Project/results/zero_shot/speaker_1055/duration_4/source_audio.wav",
+        "zero_shot_audio_wav": "/Users/nathandong/Desktop/School/CS479_Project/data/audio/speaker_1055/zero_shot_2.wav",
+        "fine_tune_audio_wav": "/Users/nathandong/Desktop/School/CS479_Project/data/audio/speaker_1055/fine_tuned_2.wav"
+      },
+      "ratings": {
+        "zero_shot": {
+          "translation_accuracy": 1,
+          "speaker_persona_match": 3,
+          "naturalness": 3,
+          "overall": 2,
+          "comments": ""
+        },
+        "fine_tune": {
+          "translation_accuracy": 2,
+          "speaker_persona_match": 3,
+          "naturalness": 2,
+          "overall": 1,
+          "comments": ""
+        },
+        "preference": "zero_shot"
+      },
+      "general_notes": "",
+      "saved_at_unix": 1765908464.0707588
+    },
+    "spk=1055|pair=3": {
+      "speaker_id": "1055",
+      "pair_index": 3,
+      "source_text_en": "It's almost time for school.",
+      "target_text_es": "Es casi la hora de ir a la escuela.",
+      "paths": {
+        "reference_audio_wav": "/Users/nathandong/Desktop/School/CS479_Project/results/zero_shot/speaker_1055/duration_4/source_audio.wav",
+        "zero_shot_audio_wav": "/Users/nathandong/Desktop/School/CS479_Project/data/audio/speaker_1055/zero_shot_3.wav",
+        "fine_tune_audio_wav": "/Users/nathandong/Desktop/School/CS479_Project/data/audio/speaker_1055/fine_tuned_3.wav"
+      },
+      "ratings": {
+        "zero_shot": {
+          "translation_accuracy": 2,
+          "speaker_persona_match": 3,
+          "naturalness": 3,
+          "overall": 2,
+          "comments": ""
+        },
+        "fine_tune": {
+          "translation_accuracy": 4,
+          "speaker_persona_match": 3,
+          "naturalness": 4,
+          "overall": 3,
+          "comments": ""
+        },
+        "preference": "fine_tune"
+      },
+      "general_notes": "",
+      "saved_at_unix": 1765908855.161113
+    },
+    "spk=28165|pair=4": {
+      "speaker_id": "28165",
+      "pair_index": 4,
+      "source_text_en": "Don't think you will be able to destroy me that easily.",
+      "target_text_es": "No creas que puedes acabar conmigo.",
+      "paths": {
+        "reference_audio_wav": "/Users/nathandong/Desktop/School/CS479_Project/results/zero_shot/speaker_28165/duration_4/source_audio.wav",
+        "zero_shot_audio_wav": "/Users/nathandong/Desktop/School/CS479_Project/data/audio/speaker_28165/zero_shot_4.wav",
+        "fine_tune_audio_wav": "/Users/nathandong/Desktop/School/CS479_Project/data/audio/speaker_28165/fine_tuned_4.wav"
+      },
+      "ratings": {
+        "zero_shot": {
+          "translation_accuracy": 2,
+          "speaker_persona_match": 2,
+          "naturalness": 3,
+          "overall": 2,
+          "comments": ""
+        },
+        "fine_tune": {
+          "translation_accuracy": 3,
+          "speaker_persona_match": 4,
+          "naturalness": 2,
+          "overall": 3,
+          "comments": ""
+        },
+        "preference": "fine_tune"
+      },
+      "general_notes": "",
+      "saved_at_unix": 1765908938.0340962
+    },
+    "spk=124992|pair=0": {
+      "speaker_id": "124992",
+      "pair_index": 0,
+      "source_text_en": "Goes by Crumbs.",
+      "target_text_es": "Se hace llamar Crumbs.",
+      "paths": {
+        "reference_audio_wav": "/Users/nathandong/Desktop/School/CS479_Project/results/zero_shot/speaker_124992/duration_4/source_audio.wav",
+        "zero_shot_audio_wav": "/Users/nathandong/Desktop/School/CS479_Project/data/audio/speaker_124992/zero_shot_0.wav",
+        "fine_tune_audio_wav": "/Users/nathandong/Desktop/School/CS479_Project/data/audio/speaker_124992/fine_tuned_0.wav"
+      },
+      "ratings": {
+        "zero_shot": {
+          "translation_accuracy": 3,
+          "speaker_persona_match": 3,
+          "naturalness": 3,
+          "overall": 3,
+          "comments": ""
+        },
+        "fine_tune": {
+          "translation_accuracy": 3,
+          "speaker_persona_match": 4,
+          "naturalness": 3,
+          "overall": 4,
+          "comments": ""
+        },
+        "preference": "fine_tune"
+      },
+      "general_notes": "",
+      "saved_at_unix": 1765908613.451916
+    },
+    "spk=124992|pair=2": {
+      "speaker_id": "124992",
+      "pair_index": 2,
+      "source_text_en": "Now, before you give us an answer, I want to impress you with three things.",
+      "target_text_es": "Antes de darnos una respuesta, quiero que sepa tres cosas.",
+      "paths": {
+        "reference_audio_wav": "/Users/nathandong/Desktop/School/CS479_Project/results/zero_shot/speaker_124992/duration_4/source_audio.wav",
+        "zero_shot_audio_wav": "/Users/nathandong/Desktop/School/CS479_Project/data/audio/speaker_124992/zero_shot_2.wav",
+        "fine_tune_audio_wav": "/Users/nathandong/Desktop/School/CS479_Project/data/audio/speaker_124992/fine_tuned_2.wav"
+      },
+      "ratings": {
+        "zero_shot": {
+          "translation_accuracy": 3,
+          "speaker_persona_match": 3,
+          "naturalness": 3,
+          "overall": 3,
+          "comments": ""
+        },
+        "fine_tune": {
+          "translation_accuracy": 3,
+          "speaker_persona_match": 3,
+          "naturalness": 3,
+          "overall": 3,
+          "comments": ""
+        },
+        "preference": "no_preference"
+      },
+      "general_notes": "",
+      "saved_at_unix": 1765908956.253282
+    },
+    "spk=124992|pair=3": {
+      "speaker_id": "124992",
+      "pair_index": 3,
+      "source_text_en": "It's almost time for school.",
+      "target_text_es": "Es casi la hora de ir a la escuela.",
+      "paths": {
+        "reference_audio_wav": "/Users/nathandong/Desktop/School/CS479_Project/results/zero_shot/speaker_124992/duration_4/source_audio.wav",
+        "zero_shot_audio_wav": "/Users/nathandong/Desktop/School/CS479_Project/data/audio/speaker_124992/zero_shot_3.wav",
+        "fine_tune_audio_wav": "/Users/nathandong/Desktop/School/CS479_Project/data/audio/speaker_124992/fine_tuned_3.wav"
+      },
+      "ratings": {
+        "zero_shot": {
+          "translation_accuracy": 3,
+          "speaker_persona_match": 3,
+          "naturalness": 3,
+          "overall": 3,
+          "comments": ""
+        },
+        "fine_tune": {
+          "translation_accuracy": 3,
+          "speaker_persona_match": 3,
+          "naturalness": 3,
+          "overall": 3,
+          "comments": ""
+        },
+        "preference": "no_preference"
+      },
+      "general_notes": "",
+      "saved_at_unix": 1765908970.754806
+    },
+    "spk=124992|pair=4": {
+      "speaker_id": "124992",
+      "pair_index": 4,
+      "source_text_en": "Don't think you will be able to destroy me that easily.",
+      "target_text_es": "No creas que puedes acabar conmigo.",
+      "paths": {
+        "reference_audio_wav": "/Users/nathandong/Desktop/School/CS479_Project/results/zero_shot/speaker_124992/duration_4/source_audio.wav",
+        "zero_shot_audio_wav": "/Users/nathandong/Desktop/School/CS479_Project/data/audio/speaker_124992/zero_shot_4.wav",
+        "fine_tune_audio_wav": "/Users/nathandong/Desktop/School/CS479_Project/data/audio/speaker_124992/fine_tuned_4.wav"
+      },
+      "ratings": {
+        "zero_shot": {
+          "translation_accuracy": 3,
+          "speaker_persona_match": 3,
+          "naturalness": 3,
+          "overall": 3,
+          "comments": ""
+        },
+        "fine_tune": {
+          "translation_accuracy": 3,
+          "speaker_persona_match": 4,
+          "naturalness": 1,
+          "overall": 3,
+          "comments": ""
+        },
+        "preference": "zero_shot"
+      },
+      "general_notes": "",
+      "saved_at_unix": 1765908992.9762821
+    },
+    "spk=1055|pair=1": {
+      "speaker_id": "1055",
+      "pair_index": 1,
+      "source_text_en": "Gladdie, of course.",
+      "target_text_es": "Gladdie, por supuesto.",
+      "paths": {
+        "reference_audio_wav": "/Users/nathandong/Desktop/School/CS479_Project/results/zero_shot/speaker_1055/duration_4/source_audio.wav",
+        "zero_shot_audio_wav": "/Users/nathandong/Desktop/School/CS479_Project/data/audio/speaker_1055/zero_shot_1.wav",
+        "fine_tune_audio_wav": "/Users/nathandong/Desktop/School/CS479_Project/data/audio/speaker_1055/fine_tuned_1.wav"
+      },
+      "ratings": {
+        "zero_shot": {
+          "translation_accuracy": 3,
+          "speaker_persona_match": 3,
+          "naturalness": 3,
+          "overall": 3,
+          "comments": ""
+        },
+        "fine_tune": {
+          "translation_accuracy": 3,
+          "speaker_persona_match": 3,
+          "naturalness": 3,
+          "overall": 3,
+          "comments": ""
+        },
+        "preference": "no_preference"
+      },
+      "general_notes": "",
+      "saved_at_unix": 1765908826.785516
+    },
+    "spk=28165|pair=0": {
+      "speaker_id": "28165",
+      "pair_index": 0,
+      "source_text_en": "Goes by Crumbs.",
+      "target_text_es": "Se hace llamar Crumbs.",
+      "paths": {
+        "reference_audio_wav": "/Users/nathandong/Desktop/School/CS479_Project/results/zero_shot/speaker_28165/duration_4/source_audio.wav",
+        "zero_shot_audio_wav": "/Users/nathandong/Desktop/School/CS479_Project/data/audio/speaker_28165/zero_shot_0.wav",
+        "fine_tune_audio_wav": "/Users/nathandong/Desktop/School/CS479_Project/data/audio/speaker_28165/fine_tuned_0.wav"
+      },
+      "ratings": {
+        "zero_shot": {
+          "translation_accuracy": 4,
+          "speaker_persona_match": 3,
+          "naturalness": 3,
+          "overall": 4,
+          "comments": ""
+        },
+        "fine_tune": {
+          "translation_accuracy": 3,
+          "speaker_persona_match": 3,
+          "naturalness": 3,
+          "overall": 3,
+          "comments": ""
+        },
+        "preference": "zero_shot"
+      },
+      "general_notes": "",
+      "saved_at_unix": 1765908878.031463
+    },
+    "spk=28165|pair=3": {
+      "speaker_id": "28165",
+      "pair_index": 3,
+      "source_text_en": "It's almost time for school.",
+      "target_text_es": "Es casi la hora de ir a la escuela.",
+      "paths": {
+        "reference_audio_wav": "/Users/nathandong/Desktop/School/CS479_Project/results/zero_shot/speaker_28165/duration_4/source_audio.wav",
+        "zero_shot_audio_wav": "/Users/nathandong/Desktop/School/CS479_Project/data/audio/speaker_28165/zero_shot_3.wav",
+        "fine_tune_audio_wav": "/Users/nathandong/Desktop/School/CS479_Project/data/audio/speaker_28165/fine_tuned_3.wav"
+      },
+      "ratings": {
+        "zero_shot": {
+          "translation_accuracy": 3,
+          "speaker_persona_match": 2,
+          "naturalness": 3,
+          "overall": 3,
+          "comments": ""
+        },
+        "fine_tune": {
+          "translation_accuracy": 4,
+          "speaker_persona_match": 3,
+          "naturalness": 3,
+          "overall": 4,
+          "comments": ""
+        },
+        "preference": "fine_tune"
+      },
+      "general_notes": "",
+      "saved_at_unix": 1765908918.752644
+    },
+    "spk=1055|pair=4": {
+      "speaker_id": "1055",
+      "pair_index": 4,
+      "source_text_en": "Don't think you will be able to destroy me that easily.",
+      "target_text_es": "No creas que puedes acabar conmigo.",
+      "paths": {
+        "reference_audio_wav": "/Users/nathandong/Desktop/School/CS479_Project/results/zero_shot/speaker_1055/duration_4/source_audio.wav",
+        "zero_shot_audio_wav": "/Users/nathandong/Desktop/School/CS479_Project/data/audio/speaker_1055/zero_shot_4.wav",
+        "fine_tune_audio_wav": "/Users/nathandong/Desktop/School/CS479_Project/data/audio/speaker_1055/fine_tuned_4.wav"
+      },
+      "ratings": {
+        "zero_shot": {
+          "translation_accuracy": 4,
+          "speaker_persona_match": 3,
+          "naturalness": 3,
+          "overall": 3,
+          "comments": ""
+        },
+        "fine_tune": {
+          "translation_accuracy": 3,
+          "speaker_persona_match": 3,
+          "naturalness": 3,
+          "overall": 3,
+          "comments": ""
+        },
+        "preference": "zero_shot"
+      },
+      "general_notes": "",
+      "saved_at_unix": 1765908868.0873442
+    },
+    "spk=28165|pair=1": {
+      "speaker_id": "28165",
+      "pair_index": 1,
+      "source_text_en": "Gladdie, of course.",
+      "target_text_es": "Gladdie, por supuesto.",
+      "paths": {
+        "reference_audio_wav": "/Users/nathandong/Desktop/School/CS479_Project/results/zero_shot/speaker_28165/duration_4/source_audio.wav",
+        "zero_shot_audio_wav": "/Users/nathandong/Desktop/School/CS479_Project/data/audio/speaker_28165/zero_shot_1.wav",
+        "fine_tune_audio_wav": "/Users/nathandong/Desktop/School/CS479_Project/data/audio/speaker_28165/fine_tuned_1.wav"
+      },
+      "ratings": {
+        "zero_shot": {
+          "translation_accuracy": 3,
+          "speaker_persona_match": 2,
+          "naturalness": 3,
+          "overall": 3,
+          "comments": ""
+        },
+        "fine_tune": {
+          "translation_accuracy": 3,
+          "speaker_persona_match": 3,
+          "naturalness": 2,
+          "overall": 3,
+          "comments": ""
+        },
+        "preference": "zero_shot"
+      },
+      "general_notes": "",
+      "saved_at_unix": 1765908888.037602
+    }
+  }
+}

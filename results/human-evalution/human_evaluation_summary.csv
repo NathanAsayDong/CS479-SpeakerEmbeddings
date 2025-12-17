@@ -1,0 +1,4 @@
+speaker_id,translation_accuracy_fine_tune,translation_accuracy_zero_shot,speaker_persona_match_fine_tune,speaker_persona_match_zero_shot,naturalness_fine_tune,naturalness_zero_shot,overall_fine_tune,overall_zero_shot,pref_count_fine_tune,pref_count_zero_shot,pref_count_no_preference,preferred_method
+1055,2.772727272727273,2.6363636363636362,3.090909090909091,2.8636363636363638,2.909090909090909,2.8181818181818183,2.5454545454545454,2.5,10,7,5,fine_tune
+28165,3.125,2.9375,3.1875,2.4375,2.4375,2.875,3.125,2.9375,9,5,2,fine_tune
+124992,2.95,2.95,3.25,3.0,2.7,3.0,3.0,2.95,8,5,7,fine_tune
